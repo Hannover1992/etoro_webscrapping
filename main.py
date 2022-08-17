@@ -1,25 +1,14 @@
-Import requests
-import json
-
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-
-
-
 from bs4 import BeautifulSoup
-from selenium.webdriver.chrome.options import Options
-from selenium import webdriver
-options = Options()
-driver = webdriver.Chrome(ChromeDriverManager().install())
-# driver = webdriver.Chrome("chromedriver.exe", options = options)
-driver.get("https://www.etoro.com/discover/markets/stocks/exchange/london")
+import time
 
-soup = BeautifulSoup(driver.page_source, 'html.parser')
-
-soup = BeautifulSoup(driver.page_source, 'html.parser')
-section = soup.find_all("a", attrs = {"class" : "price"})
-firms = []
-section2 = soup.find( class_ = "price" )
-for i in range(len(section)):
-    firms.append(section[i]["href"].split("/")[2])
-    print(section[i]["href"].split("/")[2])
+driver = webdriver.Chrome()
+driver.get("https://www.etoro.com/markets/btc")
+for x in range(1, 10):
+    time.sleep(2)
+    soup = BeautifulSoup(driver.page_source, 'html.parser')
+    gold = soup.find_all('div', {'class': 'head-info-stats-content ng-star-inserted'})
+    print(gold[0].get_text().split(" ")[1])
+    print(gold[0].contents[0].get_text())
+    #wait for 10 seconds
+    # driver.closE()
